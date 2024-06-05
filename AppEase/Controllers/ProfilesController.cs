@@ -32,8 +32,7 @@ namespace AppEase.Controllers
                 return NotFound();
             }
 
-            var profile = await _context.Profiles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var profile = await _context.Profiles.Include(p => p.Jobs).FirstOrDefaultAsync(p => p.Id == id);
             if (profile == null)
             {
                 return NotFound();
@@ -62,6 +61,23 @@ namespace AppEase.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(profile);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddJob(int id, [Bind("Title", "Description", "ProfileId")] Job newJob)
+        {
+            if (ModelState.IsValid)
+            {
+                var profile = await _context.Profiles.Include(p => p.Jobs).FirstOrDefaultAsync(p => p.Id == id);
+                if (profile != null)
+                {
+                    profile.Jobs ??= new List<Job>();
+                    profile.Jobs.Add(newJob);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction("Details", new { id });
+            }
+            return View("Details", id);
         }
 
         // GET: Profiles/Edit/5

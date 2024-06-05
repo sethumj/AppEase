@@ -21,7 +21,8 @@ namespace AppEase.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Jobs.ToListAsync());
+            var appEaseDbContext = _context.Jobs.Include(j => j.Profile);
+            return View(await appEaseDbContext.ToListAsync());
         }
 
         // GET: Jobs/Details/5
@@ -33,6 +34,7 @@ namespace AppEase.Controllers
             }
 
             var job = await _context.Jobs
+                .Include(j => j.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (job == null)
             {
@@ -45,6 +47,7 @@ namespace AppEase.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Email");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Job job)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ProfileId")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace AppEase.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Email", job.ProfileId);
             return View(job);
         }
 
@@ -77,6 +81,7 @@ namespace AppEase.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Email", job.ProfileId);
             return View(job);
         }
 
@@ -85,7 +90,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Job job)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ProfileId")] Job job)
         {
             if (id != job.Id)
             {
@@ -112,8 +117,12 @@ namespace AppEase.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Email", job.ProfileId);
             return View(job);
         }
+        // POST: Jobs/AddJob
+        
+
 
         // GET: Jobs/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -124,6 +133,7 @@ namespace AppEase.Controllers
             }
 
             var job = await _context.Jobs
+                .Include(j => j.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (job == null)
             {

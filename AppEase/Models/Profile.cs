@@ -17,7 +17,9 @@ namespace AppEase.Models
         public string Resume {  set; get; }
         [Required(ErrorMessage ="Skill Set is Required")]
         public string SkillSet { set; get; }
-        public List<Job>? Jobs { set; get; }
+        [Display(Name = "New Job")]
+        public Job? NewJob { set; get; }
+        public virtual ICollection<Job>? Jobs { set; get; }
 
 
     }

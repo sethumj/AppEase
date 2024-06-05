@@ -12,5 +12,9 @@ namespace AppEase.Models
         [Required(ErrorMessage ="Job Description Requied")]
         public string Description { get; set; }
 
+        public int ProfileId { get; set; }
+
+        public virtual Profile? Profile { get; set; }
+
     }
 }

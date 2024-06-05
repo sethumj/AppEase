@@ -49,6 +49,43 @@
     </dl>
 </div>
 <div>
+    <h4>Jobs</h4>
+    <hr />
+    @if (Model.Jobs != null && Model.Jobs.Any())
+    {
+        <ul>
+            @foreach (var job in Model.Jobs)
+            {
+                <li>@job.Title</li>
+                <!-- Display other job details as needed -->
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No jobs found for this profile.</p>
+    }
+</div>
+
+<div>
+    <h4>Add Job</h4>
+    <hr />
+    <form asp-action="AddJob" method="post">
+        <input type="hidden" asp-for="Id" /> <!-- Hidden field to include profile ID in the form -->
+        <div class="form-group">
+            <label asp-for="NewJob.Title"></label>
+            <input asp-for="NewJob.Title" class="form-control" />
+            <span asp-validation-for="NewJob.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewJob.Description" class="control-label"></label>
+            <input asp-for="NewJob.Description" class="form-control" />
+            <span asp-validation-for="NewJob.Description" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Job</button>
+    </form>
+</div>
+<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
