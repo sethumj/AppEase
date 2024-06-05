@@ -56,7 +56,8 @@
         <ul>
             @foreach (var job in Model.Jobs)
             {
-                <li>@job.Title</li>
+                <li><a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id">@job.Title</a></li>
+               // <li>@job.Title</li>
                 <!-- Display other job details as needed -->
             }
         </ul>

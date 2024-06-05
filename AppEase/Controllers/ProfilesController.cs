@@ -39,6 +39,7 @@ namespace AppEase.Controllers
             }
 
             return View(profile);
+
         }
 
         // GET: Profiles/Create
@@ -72,7 +73,10 @@ namespace AppEase.Controllers
                 if (profile != null)
                 {
                     profile.Jobs ??= new List<Job>();
+                    newJob.ProfileId = profile.Id;
+                    newJob.Profile = profile;
                     profile.Jobs.Add(newJob);
+                    _context.Add(newJob);
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction("Details", new { id });
