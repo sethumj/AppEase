@@ -17,6 +17,7 @@ namespace AppEase.Models
         public string Resume {  set; get; }
         [Required(ErrorMessage ="Skill Set is Required")]
         public string SkillSet { set; get; }
+        public List<Job>? Jobs { set; get; }
 
 
     }
