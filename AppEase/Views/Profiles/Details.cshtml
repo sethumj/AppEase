@@ -4,8 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
     <h4>Profile</h4>
     <hr />
@@ -50,26 +48,6 @@
 </div>
 
 <div>
-    <button onclick="openPdf()">Open Cover Letter PDF</button>
-
-    <script>
-        function openPdf() {
-            window.open('/cover-letter', '_blank');
-        }
-    </script>
-</div>
-
-<div>
-    <button onclick="openDownloadPdf()">Download Cover Letter PDF</button>
-
-    <script>
-        function openDownloadPdf() {
-            window.open('/cover-letter-download', '_blank');
-        }
-    </script>
-</div>
-
-<div>
     <h4>Jobs</h4>
     <hr />
     @if (Model.Jobs != null && Model.Jobs.Any())
@@ -95,6 +73,11 @@
     <form asp-action="AddJob" method="post">
         <input type="hidden" asp-for="Id" /> <!-- Hidden field to include profile ID in the form -->
         <div class="form-group">
+            <label asp-for="NewJob.CompanyName"></label>
+            <input asp-for="NewJob.CompanyName" class="form-control" />
+            <span asp-validation-for="NewJob.CompanyName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="NewJob.Title"></label>
             <input asp-for="NewJob.Title" class="form-control" />
             <span asp-validation-for="NewJob.Title" class="text-danger"></span>
@@ -104,10 +87,12 @@
             <input asp-for="NewJob.Description" class="form-control" />
             <span asp-validation-for="NewJob.Description" class="text-danger"></span>
         </div>
+        <br />
         <button type="submit" class="btn btn-primary">Add Job</button>
     </form>
 </div>
 <div>
+    <br /><br />
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppEase.Models;
+using AppEase.Service;
 
 namespace AppEase.Controllers
 {
@@ -56,7 +57,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ProfileId")] Job job)
+        public async Task<IActionResult> Create([Bind("Id,CompanyName,Title,Description,ProfileId")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +91,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ProfileId")] Job job)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyName,Title,Description,ProfileId")] Job job)
         {
             if (id != job.Id)
             {
@@ -161,6 +162,37 @@ namespace AppEase.Controllers
         private bool JobExists(int id)
         {
             return _context.Jobs.Any(e => e.Id == id);
+        }
+        private async Task<Profile> getProfile(int id)
+        {
+            var profile = await _context.Profiles.Include(p => p.Jobs).FirstOrDefaultAsync(p => p.Id == id);
+            return profile;
+        }
+        private async Task<Job> getJob(int id)
+        {
+            var job = await _context.Jobs.FirstOrDefaultAsync(p => p.Id == id);
+            return job;
+        }
+
+        [HttpPost("cover-letter")]
+        public IActionResult GetCoverLetterPdf([FromForm] Job job)
+        {
+            Profile profile = getProfile(job.ProfileId).Result;
+            Job job1 = getJob(job.Id).Result;
+            var pdfBytes = GeneratePdfService.getCoverLetterPdf(job1, profile);
+            Response.Headers.Add("Content-Disposition", "inline; filename=cover-letter.pdf");
+            return File(pdfBytes, "application/pdf");
+        }
+
+
+        [HttpPost("cover-letter-download")]
+        public  IActionResult GetCoverLetterDownloadPdf([FromForm] Job job)
+        {
+
+            Profile profile = getProfile(job.ProfileId).Result;
+            Job job1 = getJob(job.Id).Result;
+            var pdfBytes = GeneratePdfService.getCoverLetterPdf(job1,profile);
+            return File(pdfBytes, "application/pdf", "cover-letter.pdf");
         }
     }
 }

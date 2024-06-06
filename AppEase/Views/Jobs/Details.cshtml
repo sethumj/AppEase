@@ -11,6 +11,12 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
@@ -30,6 +36,41 @@
         </dd>
     </dl>
 </div>
+
+
+<div>
+    <form id="downloadForm" method="post" action="/cover-letter-download" target="_blank">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Title" value="@Model.Title" />
+        <input type="hidden" name="CompanyName" value="@Model.CompanyName" />
+        <input type="hidden" name="Description" value="@Model.Description" />
+        <input type="hidden" name="ProfileId" value="@Model.ProfileId" />
+        <button type="submit">Download Cover Letter PDF</button>
+    </form>
+    <br />
+</div>
+
+<div>
+    <form id="downloadForm" method="post" action="/cover-letter" target="_blank">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Title" value="@Model.Title" />
+        <input type="hidden" name="CompanyName" value="@Model.CompanyName" />
+        <input type="hidden" name="Description" value="@Model.Description" />
+        <input type="hidden" name="ProfileId" value="@Model.ProfileId" />
+        <button type="submit">View Cover Letter PDF</button>
+    </form>
+    <br />
+</div>
+@* <div>
+    <button onclick="openDownloadPdf()">Download Cover Letter PDF</button>
+
+    <script>
+        function openDownloadPdf() {
+            window.open('/cover-letter-download', '_blank');
+        }
+    </script>
+</div> *@
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-controller="Profiles" asp-action="Details" asp-route-id="@Model?.ProfileId">Back to profile</a>

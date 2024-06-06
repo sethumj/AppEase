@@ -7,7 +7,9 @@ namespace AppEase.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage ="Job Title required")]
+        [Required(ErrorMessage ="Company Name required")]
+        public string CompanyName { get; set; }
+        [Required(ErrorMessage = "Job Title required")]
         public string Title { get; set; }
         [Required(ErrorMessage ="Job Description Requied")]
         public string Description { get; set; }

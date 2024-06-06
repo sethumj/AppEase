@@ -82,7 +82,7 @@ namespace AppEase.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddJob(int id, [Bind("Title", "Description", "ProfileId")] Job newJob)
+        public async Task<IActionResult> AddJob(int id, [Bind("CompanyName","Title", "Description", "ProfileId")] Job newJob)
         {
             if (ModelState.IsValid)
             {
