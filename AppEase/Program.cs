@@ -1,6 +1,11 @@
 using AppEase.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
+using System.ComponentModel;
+
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

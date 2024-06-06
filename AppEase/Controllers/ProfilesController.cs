@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppEase.Models;
+using AppEase.Service;
 
 namespace AppEase.Controllers
 {
@@ -22,6 +23,22 @@ namespace AppEase.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Profiles.ToListAsync());
+        }
+
+        [HttpGet("cover-letter")]
+        public IActionResult GetCoverLetterPdf()
+        {
+            var pdfBytes = GeneratePdfService.getCoverLetterPdf();
+            Response.Headers.Add("Content-Disposition", "inline; filename=cover-letter.pdf");
+            return File(pdfBytes, "application/pdf");
+        }
+
+
+        [HttpGet("cover-letter-download")]
+        public IActionResult GetCoverLetterDownloadPdf()
+        {
+            var pdfBytes = GeneratePdfService.getCoverLetterPdf();
+            return File(pdfBytes, "application/pdf", "cover-letter.pdf");
         }
 
         // GET: Profiles/Details/5
