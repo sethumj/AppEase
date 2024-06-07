@@ -36,9 +36,9 @@ namespace AppEase.Service
                             column.Item().Text(text =>
                             {
                                 text.Span(profile.Name+"\n").Bold();
-                                text.Span("Your Address Line 1\n");
-                                text.Span("Your Address Line 2\n");
-                                text.Span("City, State, ZIP Code\n");
+                                text.Span(profile.Address.Street+"\n");
+                                text.Span(profile.Address.City+", "+profile.Address.State+", "+profile.Address.Pincode+"\n");
+                                //text.Span("City, State, ZIP Code\n");
                                 text.Span("Email: "+profile.Email+"\n");
                                 text.Span("Phone: (123) 456-7890\n");
                                 text.Span($"Date: {DateTime.Now.ToString("MMMM dd, yyyy")}\n");
@@ -65,8 +65,8 @@ namespace AppEase.Service
 
                             // Body
                             column.Item().Text("I am writing to express my interest in the "+job.Title+" position at "+job.CompanyName+". With my background in [relevant field or experience], I am confident in my ability to contribute effectively to your team.\n\n" +
-                                "I have [mention some of your key qualifications and achievements that are relevant to the job]. My experience at [previous company or educational institution] has equipped me with [mention skills or knowledge]. I am particularly drawn to [Company Name] because [mention something you appreciate about the company or the role].\n\n" +
-                                "I am eager to bring my [mention specific skills or attributes] to [Company Name] and contribute to [specific goals or projects the company is known for]. Thank you for considering my application. I look forward to the opportunity to discuss how my background, skills, and certifications will be a perfect fit for this role.\n\n" +
+                                "I have [mention some of your key qualifications and achievements that are relevant to the job]. My experience at [previous company or educational institution] has equipped me with [mention skills or knowledge]. I am particularly drawn to "+job.CompanyName+" because [mention something you appreciate about the company or the role].\n\n" +
+                                "I am eager to bring my [mention specific skills or attributes] to "+job.CompanyName+" and contribute to [specific goals or projects the company is known for]. Thank you for considering my application. I look forward to the opportunity to discuss how my background, skills, and certifications will be a perfect fit for this role.\n\n" +
                                 "Sincerely,\n\n" +
                                 profile.Name);
 

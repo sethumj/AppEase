@@ -165,7 +165,7 @@ namespace AppEase.Controllers
         }
         private async Task<Profile> getProfile(int id)
         {
-            var profile = await _context.Profiles.Include(p => p.Jobs).FirstOrDefaultAsync(p => p.Id == id);
+            var profile = await _context.Profiles.Include(p => p.Jobs).Include(p => p.Address).FirstOrDefaultAsync(p => p.Id == id);
             return profile;
         }
         private async Task<Job> getJob(int id)

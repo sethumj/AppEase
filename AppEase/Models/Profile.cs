@@ -20,6 +20,8 @@ namespace AppEase.Models
         [Display(Name = "New Job")]
         public Job? NewJob { set; get; }
         public virtual ICollection<Job>? Jobs { set; get; }
+        [Required(ErrorMessage = " Address Required ")]
+        public Address Address { set; get; }
 
 
     }

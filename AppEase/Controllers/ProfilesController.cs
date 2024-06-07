@@ -70,7 +70,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet")] Profile profile)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet,Address")] Profile profile)
         {
             if (ModelState.IsValid)
             {
