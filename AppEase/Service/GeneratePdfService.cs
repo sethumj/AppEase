@@ -44,7 +44,7 @@ namespace AppEase.Service
                                 text.Span(profile.Address.City+", "+profile.Address.State+", "+profile.Address.Pincode+"\n");
                                 //text.Span("City, State, ZIP Code\n");
                                 text.Span("Email: "+profile.Email+"\n");
-                                //text.Span("Phone: (123) 456-7890\n");
+                                text.Span("Phone: (989) 491-2995\n");
                                 text.Span($"Date: {DateTime.Now.ToString("MMMM dd, yyyy")}\n");
                             });
 

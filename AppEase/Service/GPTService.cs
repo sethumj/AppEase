@@ -5,7 +5,7 @@ namespace AppEase.Service
 {
     public class GPTService
     {
-        public string GetPromptResults(string prompt)
+        public string GetPromptResults(string prompt) 
         {
             DotEnv.Load();
             var key = Environment.GetEnvironmentVariable("KEY");

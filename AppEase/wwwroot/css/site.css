@@ -101,3 +101,21 @@ body {
         position: relative;
         z-index: 1;
     }
+
+
+.job-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.job-card {
+    width: 100%;
+    max-width: 300px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .job-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
