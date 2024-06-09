@@ -26,7 +26,17 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+
+            @{
+                var resumeWords = Model.Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var firstTenWords = string.Join(" ", resumeWords.Take(10)) + " View More";
+            }
+            <span class="short-resume">@firstTenWords</span>
+            <span class="full-resume" style="display:none;">@Model.Description View Less</span>
+
+            <a href="javascript:void(0);" class="show-full-resume" onclick="toggleResume(this)">
+                <img src="~/images/viewmore.png" alt="Show Full Resume" style="width:25px;height:25px;" />
+            </a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Profile)
@@ -75,3 +85,20 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-controller="Profiles" asp-action="Details" asp-route-id="@Model?.ProfileId">Back to profile</a>
 </div>
+
+@section Scripts {
+    <script>
+        function toggleResume(element) {
+            var shortResume = element.previousElementSibling.previousElementSibling;
+            var fullResume = element.previousElementSibling;
+            if (fullResume.style.display === "none") {
+                fullResume.style.display = "inline";
+                shortResume.style.display = "none";
+            } else {
+                fullResume.style.display = "none";
+                shortResume.style.display = "inline";
+            }
+        }
+    </script>
+}
+

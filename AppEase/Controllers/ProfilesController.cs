@@ -109,7 +109,7 @@ namespace AppEase.Controllers
                 return NotFound();
             }
 
-            var profile = await _context.Profiles.FindAsync(id);
+            var profile = await _context.Profiles.Include(p => p.Address).FirstOrDefaultAsync( m=> m.Id == id);
             if (profile == null)
             {
                 return NotFound();
@@ -122,7 +122,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet")] Profile profile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet,Address")] Profile profile)
         {
             if (id != profile.Id)
             {

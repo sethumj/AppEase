@@ -4,6 +4,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 using System.IO;
+using AppEase.Service;
 
 namespace AppEase.Service
 {
@@ -13,7 +14,10 @@ namespace AppEase.Service
         public static byte[] getCoverLetterPdf( Job job, Profile profile)
         {
             using var stream = new MemoryStream();
-
+            var prompt = "Hi i am" + profile.Name + " I am applying for a " + job.Title + " in " + job.CompanyName + " the job description is : " + job.Description + "" +
+                " my skills are : " + profile.SkillSet+ "this is my resume : "+ profile.Resume+" ." + " my gmail is " + profile.Email + " my address is : " + profile.Address.ToString + ". give me a cover letter body to send to the company";
+            var letterbody = new GPTService().GetPromptResults(prompt);
+            
             Document.Create(container =>
             {
                 container.Page(page =>
@@ -40,7 +44,7 @@ namespace AppEase.Service
                                 text.Span(profile.Address.City+", "+profile.Address.State+", "+profile.Address.Pincode+"\n");
                                 //text.Span("City, State, ZIP Code\n");
                                 text.Span("Email: "+profile.Email+"\n");
-                                text.Span("Phone: (123) 456-7890\n");
+                                //text.Span("Phone: (123) 456-7890\n");
                                 text.Span($"Date: {DateTime.Now.ToString("MMMM dd, yyyy")}\n");
                             });
 
@@ -52,23 +56,24 @@ namespace AppEase.Service
                             {
                                 text.Span("Hiring Manager\n").Bold();
                                 text.Span(job.CompanyName+"\n");
-                                text.Span("Company Address Line 1\n");
-                                text.Span("Company Address Line 2\n");
-                                text.Span("City, State, ZIP Code\n");
+                                //text.Span("Company Address Line 1\n");
+                                //text.Span("Company Address Line 2\n");
+                                //text.Span("City, State, ZIP Code\n");
                             });
 
                             // Spacer
                             column.Item().Text("\n");
 
                             // Greeting
-                            column.Item().Text("Dear Hiring Manager,\n\n");
+                            //column.Item().Text("Dear Hiring Manager,\n\n");
 
                             // Body
-                            column.Item().Text("I am writing to express my interest in the "+job.Title+" position at "+job.CompanyName+". With my background in [relevant field or experience], I am confident in my ability to contribute effectively to your team.\n\n" +
-                                "I have [mention some of your key qualifications and achievements that are relevant to the job]. My experience at [previous company or educational institution] has equipped me with [mention skills or knowledge]. I am particularly drawn to "+job.CompanyName+" because [mention something you appreciate about the company or the role].\n\n" +
-                                "I am eager to bring my [mention specific skills or attributes] to "+job.CompanyName+" and contribute to [specific goals or projects the company is known for]. Thank you for considering my application. I look forward to the opportunity to discuss how my background, skills, and certifications will be a perfect fit for this role.\n\n" +
-                                "Sincerely,\n\n" +
-                                profile.Name);
+                            //column.Item().Text("I am writing to express my interest in the "+job.Title+" position at "+job.CompanyName+". With my background in [relevant field or experience], I am confident in my ability to contribute effectively to your team.\n\n" +
+                            //    "I have [mention some of your key qualifications and achievements that are relevant to the job]. My experience at [previous company or educational institution] has equipped me with [mention skills or knowledge]. I am particularly drawn to "+job.CompanyName+" because [mention something you appreciate about the company or the role].\n\n" +
+                            //    "I am eager to bring my [mention specific skills or attributes] to "+job.CompanyName+" and contribute to [specific goals or projects the company is known for]. Thank you for considering my application. I look forward to the opportunity to discuss how my background, skills, and certifications will be a perfect fit for this role.\n\n" +
+                            //    "Sincerely,\n\n" +
+                            //    profile.Name);
+                            column.Item().Text(letterbody);
 
                             // Spacer
                             column.Item().Text("\n");
