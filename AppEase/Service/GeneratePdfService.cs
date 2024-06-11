@@ -35,7 +35,7 @@ namespace AppEase.Service
                         .Column(column =>
                         {
                             column.Spacing(5);
-
+                            column.Item().Text("");
                             // Applicant's Address
                             column.Item().Text(text =>
                             {
@@ -79,17 +79,17 @@ namespace AppEase.Service
                             column.Item().Text("\n");
 
                             // Footer
-                            column.Item().AlignCenter().Text("Thank you for your time and consideration.")
-                                .FontSize(12)
-                                .Italic();
+                            //column.Item().AlignCenter().Text("Thank you for your time and consideration.")
+                            //    .FontSize(12)
+                            //    .Italic();
                         });
 
-                    page.Footer()
-                        .AlignCenter()
-                        .Text(x =>
-                        {
-                            x.Span("Generated using AppEase").FontSize(10);
-                        });
+                    //page.Footer()
+                    //    .AlignCenter()
+                    //    .Text(x =>
+                    //    {
+                    //        x.Span("Generated using AppEase").FontSize(10);
+                    //    });
                 });
 
             }).GeneratePdf(stream);

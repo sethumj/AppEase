@@ -62,24 +62,29 @@
     <hr />
     @if (Model.Jobs != null && Model.Jobs.Any())
     {
-        <div class="job-cards">
-            @foreach (var job in Model.Jobs)
-            {
-                <div class="card job-card">
-                    <div class="card-body">
-                        <h5 class="card-title">@job.Title</h5>
-                        <p class="card-text">@job.CompanyName</p>
-                        <!-- Display other job details as needed -->
-                        <a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-primary">View Details</a>
+        <div class="job-cards-container">
+            <button class="scroll-arrow left" onclick="customscrollLeft()">&#9664;</button>
+            <div class="job-cards">
+                @foreach (var job in Model.Jobs)
+                {
+                    <div class="card job-card">
+                        <div class="card-body">
+                            <h5 class="card-title">@job.Title</h5>
+                            <p class="card-text">@job.CompanyName</p>
+                            <!-- Display other job details as needed -->
+                            <a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-primary">View Details</a>
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+            <button class="scroll-arrow right" onclick="scrollRight()">&#9654;</button>
         </div>
     }
     else
     {
         <p>No jobs found for this profile.</p>
     }
+    <br />
 </div>
 
 <div>
@@ -126,5 +131,25 @@
             }
         }
     </script>
-}
 
+    <script>
+        function customscrollLeft() {
+            const container = document.querySelector('.job-cards');
+            console.log("scroll left");
+            container.scrollBy({
+                left: -250,  // Adjust the value as needed
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    <script>
+        function scrollRight() {
+            const container = document.querySelector('.job-cards');
+            console.log("scroll right");
+            container.scrollBy({
+                left: 250,  // Adjust the value as needed
+                behavior: 'smooth'
+            });
+        }
+    </script>
+}

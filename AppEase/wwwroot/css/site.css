@@ -102,7 +102,7 @@ body {
         z-index: 1;
     }
 
-
+/*
 .job-cards {
     display: flex;
     flex-wrap: wrap;
@@ -118,4 +118,54 @@ body {
     .job-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }*/
+.job-cards-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 50px; /* Add padding for space around arrows */
+}
+
+.job-cards {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+    .job-cards::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+    }
+
+.job-card {
+    flex: 0 0 auto;
+    width: 250px;
+    margin: 0 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .job-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+.scroll-arrow {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    color: #000;
+}
+
+    .scroll-arrow.left {
+        left: 10px; /* Position left arrow with some margin */
+    }
+
+    .scroll-arrow.right {
+        right: 10px; /* Position right arrow with some margin */
     }
