@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AppEase.Models;
 using AppEase.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using AppEase.Areas.Identity.Data;
 
 namespace AppEase.Controllers
 {
@@ -15,16 +17,20 @@ namespace AppEase.Controllers
     public class ProfilesController : Controller
     {
         private readonly AppEaseDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfilesController(AppEaseDbContext context)
+        public ProfilesController(AppEaseDbContext context , UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Profiles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Profiles.ToListAsync());
+            var id = _userManager.GetUserId(this.User);
+            var profile = await _context.Profiles.Where(p => p.userId == id).ToListAsync();
+            return View(profile);
         }
 
         [HttpGet("cover-letter")]
@@ -72,10 +78,13 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet,Address")] Profile profile)
+        public async Task<IActionResult> Create([Bind("Name,Email,LinkedIn,Github,Resume,SkillSet,Address,userId")] Profile profile)
         {
-            if (ModelState.IsValid)
+            var UserId = _userManager.GetUserId(this.User);
+
+            if (ModelState.IsValid && UserId !=null)
             {
+                profile.userId = UserId;
                 _context.Add(profile);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -124,7 +133,7 @@ namespace AppEase.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet,Address")] Profile profile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,LinkedIn,Github,Resume,SkillSet,Address,userId")] Profile profile)
         {
             if (id != profile.Id)
             {
