@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppEase.Models;
 using AppEase.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppEase.Controllers
 {
+    [Authorize]
     public class JobsController : Controller
     {
         private readonly AppEaseDbContext _context;

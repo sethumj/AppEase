@@ -6,6 +6,9 @@ using QuestPDF.Infrastructure;
 using System.ComponentModel;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
+using AppEase.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
+
 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 
@@ -15,10 +18,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppEaseDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(8, 0, 36))));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<AppEaseDbContext>();
 //builder.Services.AddDbContext<AppEaseDbContext>(options => options.UseInMemoryDatabase("AppEaseDb"));
 
 /*builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameWorkStores<AppEaseDbContext>(); */
+builder.Services.AddRazorPages();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireUppercase = false;
+});
+
 
 var app = builder.Build();
 
@@ -35,11 +47,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapRazorPages();
 app.Run();
