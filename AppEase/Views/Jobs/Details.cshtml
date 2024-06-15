@@ -28,7 +28,7 @@
 
             @{
                 var resumeWords = Model.Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                var firstTenWords = string.Join(" ", resumeWords.Take(10)) + " View More";
+                var firstTenWords = string.Join(" ", resumeWords.Take(10));
             }
             <span class="short-resume">@firstTenWords</span>
             <span class="full-resume" style="display:none;">@Model.Description View Less</span>
@@ -80,8 +80,8 @@
 </div> *@
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-controller="Profiles" asp-action="Details" asp-route-id="@Model?.ProfileId">Back to profile</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-controller="Profiles" asp-action="Details" asp-route-id="@Model?.ProfileId" class="btn btn-outline-dark">Back to profile</a>
 </div>
 
 @section Scripts {

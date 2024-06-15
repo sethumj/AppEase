@@ -39,7 +39,7 @@
         <dd class = "col-sm-10">
             @{
                 var resumeWords = Model.Resume.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                var firstTenWords = string.Join(" ", resumeWords.Take(10)) + " View More";
+                var firstTenWords = string.Join(" ", resumeWords.Take(10)) ;
             }
             <span class="short-resume">@firstTenWords</span>
             <span class="full-resume" style="display:none;">@Model.Resume View Less</span>
@@ -59,7 +59,7 @@
 
 <div>
     <h4>Jobs</h4>
-    <hr />
+    <hr /><br />
     @if (Model.Jobs != null && Model.Jobs.Any())
     {
         <div class="job-cards-container">
@@ -113,11 +113,13 @@
 </div>
 <div>
     <br /><br />
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-dark">Back to List</a>
 </div>
 
 @section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script>
         function toggleResume(element) {
             var shortResume = element.previousElementSibling.previousElementSibling;

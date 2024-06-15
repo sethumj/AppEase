@@ -25,9 +25,9 @@ body {
 .animated-button {
     background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
     border: none;
-    border-radius: 25px; /* Rounded edges */
+    border-radius: 10px; /* Rounded edges */
     color: white;
-    padding: 15px 32px;
+    padding: 10px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -52,9 +52,9 @@ body {
 .addjobanimatedbutton {
     background: linear-gradient(45deg, #4CAF50, #8BC34A);
     border: none;
-    border-radius: 30px; /* Rounded edges */
+    border-radius: 10px; /* Rounded edges */
     color: white;
-    padding: 15px 32px;
+    padding: 8px 31px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -169,4 +169,36 @@ body {
 
     .scroll-arrow.right {
         right: 10px; /* Position right arrow with some margin */
+    }
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-primary, .btn-info, .btn-danger {
+    margin: 0 5px;
+}
+
+.short-resume, .full-resume {
+    display: inline-block;
+    max-width: 250px;
+    word-wrap: break-word;
+}
+
+.full-resume {
+    display: none;
+}
+
+.show-full-resume img {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+    .show-full-resume img:hover {
+        transform: scale(1.2);
     }

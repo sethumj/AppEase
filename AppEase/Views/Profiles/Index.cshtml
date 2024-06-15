@@ -7,9 +7,10 @@
 <h1>Profiles</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="addjobanimatedbutton"><span>Create New</span></a>
 </p>
-<table class="table">
+<div class="table-responsive"> 
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -51,7 +52,7 @@
             <td>
                    @{
                     var resumeWords = item.Resume.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    var firstTenWords = string.Join(" ", resumeWords.Take(10)) +" View More";
+                    var firstTenWords = string.Join(" ", resumeWords.Take(10)) ;
                 }
                 <span class="short-resume">@firstTenWords</span>
                 <span class="full-resume" style="display:none;">@item.Resume View Less</span>
@@ -64,15 +65,15 @@
                 @Html.DisplayFor(modelItem => item.SkillSet)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td> 
         </tr>
 }
     </tbody>
 </table>
+</div>
 
 @section Scripts {
     <script>

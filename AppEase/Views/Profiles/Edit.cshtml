@@ -5,11 +5,12 @@
 }
 
 <h1>Edit</h1>
-
+<br />
 <h4>Profile</h4>
-<hr />
+
 <div class="row">
     <div class="col-md-4">
+        <hr />
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -44,7 +45,10 @@
                 <input asp-for="SkillSet" class="form-control" />
                 <span asp-validation-for="SkillSet" class="text-danger"></span>
             </div>
+            <br />
             <h4>Address</h4>
+            <hr />
+            <input type="hidden" asp-for="Address.Id" />
             <div class="form-group">
                 <label asp-for="Address.Street" class="control-label"></label>
                 <input asp-for="Address.Street" class="form-control" />
@@ -75,6 +79,7 @@
                 <input asp-for="Address.Pincode" class="form-control" />
                 <span asp-validation-for="Address.Pincode" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -83,7 +88,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <br />
+    <a asp-action="Index" class="btn btn-outline-dark">Back to List</a>
 </div>
 
 @section Scripts {
